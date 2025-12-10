@@ -1,0 +1,68 @@
+/* Birthday App Custom Styles */
+
+/* Upcoming birthday highlight with accent color */
+.upcoming-birthday {
+    background-color: alpha(@accent_bg_color, 0.15);
+    border-left-width: 4px;
+    border-left-style: solid;
+    border-left-color: @accent_color;
+}
+
+.upcoming-birthday:hover {
+    background-color: alpha(@accent_bg_color, 0.25);
+}
+
+/* Today's birthday - extra emphasis */
+.birthday-today {
+    background-color: alpha(@accent_bg_color, 0.3);
+    border-left-width: 4px;
+    border-left-style: solid;
+    border-left-color: @accent_color;
+}
+
+.birthday-today:hover {
+    background-color: alpha(@accent_bg_color, 0.4);
+}
+
+/* Empty state styling */
+.empty-state-icon {
+    opacity: 0.5;
+}
+
+.empty-state-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    opacity: 0.8;
+}
+
+.empty-state-subtitle {
+    opacity: 0.6;
+}
+
+/* Birthday list container */
+.birthday-list-container {
+    margin: 12px;
+}
+
+/* Cake icon styling */
+.cake-icon {
+    opacity: 0.3;
+    margin-bottom: 24px;
+}
+
+/* Card styling for groups */
+.birthday-group {
+    margin: 12px;
+    border-radius: 12px;
+}
+
+/* Heart icon styling */
+.birthday-heart-icon {
+    color: @accent_color;
+    margin-right: 8px;
+    transition: transform 200ms ease-in-out;
+}
+
+.birthday-heart-icon:hover {
+    transform: scale(1.15);
+}
