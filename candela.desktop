@@ -1,0 +1,15 @@
+[Desktop Entry]
+Type=Application
+Name=Candela
+Comment=Don't Forget your loved ones.
+Exec=candela
+Icon=org.reend.candela
+Terminal=false
+Categories=Utility;GTK;
+Keywords=Birthday;Reminder;GTK;
+StartupNotify=true
+StartupWMClass=org.reend.candela
+
+[Desktop Action new-window]
+Name=New Window
+Exec=candela
