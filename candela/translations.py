@@ -9,25 +9,53 @@ TRANSLATIONS = {
     'tr': {
         # Window
         'app_title': 'Candela',
-        'add_birthday': 'Doğum Günü Ekle',
+        'add_event': 'Özel Gün Ekle',
         'settings': 'Ayarlar',
         
         # Empty state
-        'empty_title': 'Henüz bir doğum günü eklemedin, o kadar mı yalnızsın?',
-        'empty_subtitle': 'Yeni bir doğum günü eklemek için\n+ butonuna tıklayın',
+        'empty_title': 'Henüz bir özel gün eklemedin, o kadar mı yalnızsın?',
+        'empty_subtitle': 'Yeni bir özel gün eklemek için\n+ butonuna tıklayın',
         
-        # Birthday list
-        'all_birthdays': 'Tüm Doğum Günleri',
+        # Event list
+        'upcoming_events': 'Yaklaşan Özel Günler',
+        'all_events': 'Tüm Özel Günler',
         'today': 'Bugün!',
         'tomorrow': 'Yarın',
         'days_left': '{} gün kaldı',
         'was_days_ago': '{} gün önce',
         'years_old': '{} yaşına giriyor',
+        'anniversary_years': '{}. yıl',
         
-        # Birthday dialog
-        'new_birthday': 'Yeni Doğum Günü',
+        # Event types
+        'event_type': 'Gün Tipi',
+        'birthday': 'Doğum Günü',
+        'anniversary': 'Yıldönümü',
+        'special_event': 'Özel Gün',
+        
+        # Anniversary subtypes
+        'anniversary_type': 'Yıldönümü Türü',
+        'wedding': 'Evlilik',
+        'relationship': 'Sevgili',
+        'memorial': 'Anma (Ölüm)',
+        'other_anniversary': 'Diğer',
+        
+        # Quick add holidays
+        'quick_add': 'Hazır Bayramlar',
+        'new_year': 'Yılbaşı',
+        'christmas': 'Noel',
+        'ramadan': 'Ramazan Bayramı',
+        'eid_al_adha': 'Kurban Bayramı',
+        'valentines': 'Sevgililer Günü',
+        'mothers_day': 'Anneler Günü',
+        'fathers_day': 'Babalar Günü',
+        'halloween': 'Cadılar Bayramı',
+        'easter': 'Paskalya',
+        'thanksgiving': 'Şükran Günü',
+        
+        # Event dialog
+        'new_event': 'Yeni Özel Gün',
         'name': 'İsim',
-        'name_placeholder': 'Kişinin adını girin',
+        'name_placeholder': 'İsim veya açıklama girin',
         'date': 'Tarih',
         'day': 'Gün',
         'month': 'Ay',
@@ -52,11 +80,11 @@ TRANSLATIONS = {
         'november': 'Kasım',
         'december': 'Aralık',
         
-        # Birthday options
-        'birthday_options_body': 'Bu doğum günü için ne yapmak istersiniz?',
+        # Event options
+        'event_options_body': 'Bu özel gün için ne yapmak istersiniz?',
         'delete': 'Sil',
         'no_notes': 'Not eklenmemiş',
-        'birthday_details': 'Doğum Günü Detayları',
+        'event_details': 'Detaylar',
         
         # Toasts
         'added_toast': "'{name}' eklendi",
@@ -86,11 +114,11 @@ TRANSLATIONS = {
         # Notifications
         'notifications': 'Bildirimler',
         'notification_settings': 'Bildirim Ayarları',
-        'notification_description': 'Doğum günü hatırlatıcılarını yapılandırın',
+        'notification_description': 'Özel gün hatırlatıcılarını yapılandırın',
         'enable_notifications': 'Bildirimleri Etkinleştir',
-        'enable_notifications_subtitle': 'Yaklaşan doğum günleri için bildirim al',
+        'enable_notifications_subtitle': 'Yaklaşan özel günler için bildirim al',
         'reminder_days': 'Hatırlatma Günü',
-        'reminder_days_subtitle': 'Doğum gününden kaç gün önce bildirim gönderilsin',
+        'reminder_days_subtitle': 'Özel günden kaç gün önce bildirim gönderilsin',
         
         # About
         'about': 'Hakkında',
@@ -100,29 +128,64 @@ TRANSLATIONS = {
         'developer': 'Geliştirici',
         'technologies': 'Teknolojiler',
         'built_with': 'Yapılış',
+        
+        # Legacy support
+        'add_birthday': 'Doğum Günü Ekle',
+        'all_birthdays': 'Tüm Doğum Günleri',
+        'new_birthday': 'Yeni Doğum Günü',
+        'birthday_details': 'Doğum Günü Detayları',
+        'birthday_options_body': 'Bu doğum günü için ne yapmak istersiniz?',
     },
     'en': {
         # Window
         'app_title': 'Candela',
-        'add_birthday': 'Add Birthday',
+        'add_event': 'Add Event',
         'settings': 'Settings',
         
         # Empty state
-        'empty_title': "You haven't added any birthdays yet, are you that lonely?",
-        'empty_subtitle': 'Click the + button\nto add a new birthday',
+        'empty_title': "You haven't added any special days yet, are you that lonely?",
+        'empty_subtitle': 'Click the + button\nto add a new special day',
         
-        # Birthday list
-        'all_birthdays': 'All Birthdays',
+        # Event list
+        'upcoming_events': 'Upcoming Events',
+        'all_events': 'All Special Days',
         'today': 'Today!',
         'tomorrow': 'Tomorrow',
         'days_left': '{} days left',
         'was_days_ago': '{} days ago',
         'years_old': 'Turning {}',
+        'anniversary_years': 'Year {}',
         
-        # Birthday dialog
-        'new_birthday': 'New Birthday',
+        # Event types
+        'event_type': 'Event Type',
+        'birthday': 'Birthday',
+        'anniversary': 'Anniversary',
+        'special_event': 'Special Event',
+        
+        # Anniversary subtypes
+        'anniversary_type': 'Anniversary Type',
+        'wedding': 'Wedding',
+        'relationship': 'Relationship',
+        'memorial': 'Memorial',
+        'other_anniversary': 'Other',
+        
+        # Quick add holidays
+        'quick_add': 'Quick Add Holidays',
+        'new_year': 'New Year',
+        'christmas': 'Christmas',
+        'ramadan': 'Eid al-Fitr (Ramadan)',
+        'eid_al_adha': 'Eid al-Adha',
+        'valentines': "Valentine's Day",
+        'mothers_day': "Mother's Day",
+        'fathers_day': "Father's Day",
+        'halloween': 'Halloween',
+        'easter': 'Easter',
+        'thanksgiving': 'Thanksgiving',
+        
+        # Event dialog
+        'new_event': 'New Special Day',
         'name': 'Name',
-        'name_placeholder': "Enter person's name",
+        'name_placeholder': "Enter name or description",
         'date': 'Date',
         'day': 'Day',
         'month': 'Month',
@@ -147,11 +210,11 @@ TRANSLATIONS = {
         'november': 'November',
         'december': 'December',
         
-        # Birthday options
-        'birthday_options_body': 'What would you like to do with this birthday?',
+        # Event options
+        'event_options_body': 'What would you like to do with this event?',
         'delete': 'Delete',
         'no_notes': 'No notes added',
-        'birthday_details': 'Birthday Details',
+        'event_details': 'Details',
         
         # Toasts
         'added_toast': "'{name}' added",
@@ -181,11 +244,11 @@ TRANSLATIONS = {
         # Notifications
         'notifications': 'Notifications',
         'notification_settings': 'Notification Settings',
-        'notification_description': 'Configure birthday reminders',
+        'notification_description': 'Configure event reminders',
         'enable_notifications': 'Enable Notifications',
-        'enable_notifications_subtitle': 'Get notified about upcoming birthdays',
+        'enable_notifications_subtitle': 'Get notified about upcoming events',
         'reminder_days': 'Reminder Days',
-        'reminder_days_subtitle': 'Days before birthday to send notification',
+        'reminder_days_subtitle': 'Days before event to send notification',
         
         # About
         'about': 'About',
@@ -195,29 +258,64 @@ TRANSLATIONS = {
         'developer': 'Developer',
         'technologies': 'Technologies',
         'built_with': 'Built with',
+        
+        # Legacy support
+        'add_birthday': 'Add Birthday',
+        'all_birthdays': 'All Birthdays',
+        'new_birthday': 'New Birthday',
+        'birthday_details': 'Birthday Details',
+        'birthday_options_body': 'What would you like to do with this birthday?',
     },
     'es': {
         # Window
         'app_title': 'Candela',
-        'add_birthday': 'Agregar Cumpleaños',
+        'add_event': 'Agregar Evento',
         'settings': 'Configuración',
         
         # Empty state
-        'empty_title': '¿Todavía no has añadido ningún cumpleaños, tan solo estás?',
-        'empty_subtitle': 'Haz clic en el botón +\npara agregar un nuevo cumpleaños',
+        'empty_title': '¿Todavía no has añadido ningún día especial, tan solo estás?',
+        'empty_subtitle': 'Haz clic en el botón +\npara agregar un nuevo día especial',
         
-        # Birthday list
-        'all_birthdays': 'Todos los Cumpleaños',
+        # Event list
+        'upcoming_events': 'Próximos Eventos',
+        'all_events': 'Todos los Días Especiales',
         'today': '¡Hoy!',
         'tomorrow': 'Mañana',
         'days_left': 'Faltan {} días',
         'was_days_ago': 'Hace {} días',
         'years_old': 'Cumple {}',
+        'anniversary_years': 'Año {}',
         
-        # Birthday dialog
-        'new_birthday': 'Nuevo Cumpleaños',
+        # Event types
+        'event_type': 'Tipo de Evento',
+        'birthday': 'Cumpleaños',
+        'anniversary': 'Aniversario',
+        'special_event': 'Evento Especial',
+        
+        # Anniversary subtypes
+        'anniversary_type': 'Tipo de Aniversario',
+        'wedding': 'Boda',
+        'relationship': 'Relación',
+        'memorial': 'Memorial',
+        'other_anniversary': 'Otro',
+        
+        # Quick add holidays
+        'quick_add': 'Agregar Feriados Rápido',
+        'new_year': 'Año Nuevo',
+        'christmas': 'Navidad',
+        'ramadan': 'Eid al-Fitr (Ramadán)',
+        'eid_al_adha': 'Eid al-Adha',
+        'valentines': 'San Valentín',
+        'mothers_day': 'Día de la Madre',
+        'fathers_day': 'Día del Padre',
+        'halloween': 'Halloween',
+        'easter': 'Pascua',
+        'thanksgiving': 'Día de Acción de Gracias',
+        
+        # Event dialog
+        'new_event': 'Nuevo Día Especial',
         'name': 'Nombre',
-        'name_placeholder': 'Ingrese el nombre de la persona',
+        'name_placeholder': 'Ingrese nombre o descripción',
         'date': 'Fecha',
         'day': 'Día',
         'month': 'Mes',
@@ -242,11 +340,11 @@ TRANSLATIONS = {
         'november': 'Noviembre',
         'december': 'Diciembre',
         
-        # Birthday options
-        'birthday_options_body': '¿Qué te gustaría hacer con este cumpleaños?',
+        # Event options
+        'event_options_body': '¿Qué te gustaría hacer con este evento?',
         'delete': 'Eliminar',
         'no_notes': 'Sin notas añadidas',
-        'birthday_details': 'Detalles del Cumpleaños',
+        'event_details': 'Detalles',
         
         # Toasts
         'added_toast': "'{name}' agregado",
@@ -276,11 +374,11 @@ TRANSLATIONS = {
         # Notifications
         'notifications': 'Notificaciones',
         'notification_settings': 'Configuración de Notificaciones',
-        'notification_description': 'Configura los recordatorios de cumpleaños',
+        'notification_description': 'Configura los recordatorios de eventos',
         'enable_notifications': 'Activar Notificaciones',
-        'enable_notifications_subtitle': 'Recibe notificaciones de cumpleaños próximos',
+        'enable_notifications_subtitle': 'Recibe notificaciones de eventos próximos',
         'reminder_days': 'Días de Recordatorio',
-        'reminder_days_subtitle': 'Días antes del cumpleaños para enviar notificación',
+        'reminder_days_subtitle': 'Días antes del evento para enviar notificación',
         
         # About
         'about': 'Acerca de',
@@ -290,6 +388,13 @@ TRANSLATIONS = {
         'developer': 'Desarrollador',
         'technologies': 'Tecnologías',
         'built_with': 'Construido con',
+        
+        # Legacy support
+        'add_birthday': 'Agregar Cumpleaños',
+        'all_birthdays': 'Todos los Cumpleaños',
+        'new_birthday': 'Nuevo Cumpleaños',
+        'birthday_details': 'Detalles del Cumpleaños',
+        'birthday_options_body': '¿Qué te gustaría hacer con este cumpleaños?',
     }
 }
 

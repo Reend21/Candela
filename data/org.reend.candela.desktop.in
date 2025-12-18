@@ -1,0 +1,16 @@
+[Desktop Entry]
+Type=Application
+Name=Candela
+GenericName=Birthday Reminder
+GenericName[tr]=Doğum Günü Hatırlatıcı
+GenericName[es]=Recordatorio de Cumpleaños
+Comment=Don't forget your loved ones
+Comment[tr]=Sevdiklerini unutma
+Comment[es]=No olvides a tus seres queridos
+Exec=candela
+Icon=org.reend.candela
+Terminal=false
+Categories=Utility;GTK;
+Keywords=Birthday;Reminder;Calendar;GTK;
+StartupNotify=true
+StartupWMClass=org.reend.candela

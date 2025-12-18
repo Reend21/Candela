@@ -1,0 +1,42 @@
+# Build directories
+builddir/
+builddir-*/
+build/
+_build/
+flatpak-build/
+.flatpak-builder/
+
+# Install test directories
+install-test/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+eggs/
+.eggs/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Meson outputs
+meson-output.txt
+install-output.txt
+flatpak-build-output.txt
+flatpak-install-output.txt
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary
+*.tmp
+*.bak

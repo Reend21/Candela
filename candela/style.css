@@ -1,6 +1,115 @@
-/* Birthday App Custom Styles */
+/* Candela - Special Days App Custom Styles */
 
-/* Upcoming birthday highlight with accent color */
+/* ===== Event Type Colors ===== */
+
+/* Birthday - Orange */
+.event-birthday {
+    border-left-color: #e66100;
+}
+
+/* Anniversary - Wedding - Gold */
+.event-anniversary-wedding {
+    border-left-color: #d4af37;
+}
+
+/* Anniversary - Relationship - Pink */
+.event-anniversary-relationship {
+    border-left-color: #e91e63;
+}
+
+/* Anniversary - Memorial (Death) - Black/Dark */
+.event-anniversary-memorial {
+    border-left-color: #1a1a1a;
+    background-color: rgba(26, 26, 26, 0.1);
+}
+
+/* Anniversary - Other - Purple */
+.event-anniversary-other {
+    border-left-color: #9c27b0;
+}
+
+/* Special Event - Blue */
+.event-special {
+    border-left-color: #2196f3;
+}
+
+/* ===== Holiday-Specific Styles ===== */
+
+/* Christmas / Noel - Red & Green */
+.event-holiday-christmas {
+    border-left-color: #c41e3a;
+    background-color: rgba(196, 30, 58, 0.1);
+}
+
+/* Halloween - Purple & Orange */
+.event-holiday-halloween {
+    border-left-color: #ff6600;
+    background-color: rgba(106, 13, 173, 0.15);
+}
+
+/* New Year - Gold */
+.event-holiday-newyear {
+    border-left-color: #ffd700;
+    background-color: rgba(255, 215, 0, 0.1);
+}
+
+/* Valentine's Day - Pink & Red */
+.event-holiday-valentines {
+    border-left-color: #ff1493;
+    background-color: rgba(255, 20, 147, 0.1);
+}
+
+/* Ramadan - Green & Gold */
+.event-holiday-ramadan {
+    border-left-color: #006400;
+    background-color: rgba(0, 100, 0, 0.1);
+}
+
+/* Eid al-Adha / Kurban - Green & Gold */
+.event-holiday-eid {
+    border-left-color: #006400;
+    background-color: rgba(0, 100, 0, 0.1);
+}
+
+/* Easter - Pastel */
+.event-holiday-easter {
+    border-left-color: #ff69b4;
+    background-color: rgba(255, 105, 180, 0.1);
+}
+
+/* Mother's Day - Pink */
+.event-holiday-mothers {
+    border-left-color: #ff69b4;
+    background-color: rgba(255, 105, 180, 0.08);
+}
+
+/* Father's Day - Blue */
+.event-holiday-fathers {
+    border-left-color: #4169e1;
+    background-color: rgba(65, 105, 225, 0.08);
+}
+
+/* Thanksgiving - Brown & Orange */
+.event-holiday-thanksgiving {
+    border-left-color: #8b4513;
+    background-color: rgba(139, 69, 19, 0.1);
+}
+
+/* ===== Upcoming Event Highlights ===== */
+
+.upcoming-event {
+    border-left-width: 4px;
+    border-left-style: solid;
+}
+
+/* Today's event - extra emphasis */
+.event-today {
+    border-left-width: 5px;
+    border-left-style: solid;
+    font-weight: bold;
+}
+
+/* Legacy support */
 .upcoming-birthday {
     background-color: alpha(@accent_bg_color, 0.15);
     border-left-width: 4px;
@@ -8,11 +117,6 @@
     border-left-color: @accent_color;
 }
 
-.upcoming-birthday:hover {
-    background-color: alpha(@accent_bg_color, 0.25);
-}
-
-/* Today's birthday - extra emphasis */
 .birthday-today {
     background-color: alpha(@accent_bg_color, 0.3);
     border-left-width: 4px;
@@ -20,11 +124,44 @@
     border-left-color: @accent_color;
 }
 
-.birthday-today:hover {
-    background-color: alpha(@accent_bg_color, 0.4);
+/* ===== Event Row Styling ===== */
+
+.event-row {
+    border-left-width: 4px;
+    border-left-style: solid;
+    border-left-color: transparent;
+    border-radius: 8px;
+    margin: 2px 0;
 }
 
-/* Empty state styling */
+.event-icon {
+    font-size: 24px;
+    margin-right: 8px;
+}
+
+/* ===== Event Type Buttons ===== */
+
+.event-type-btn {
+    padding: 12px 8px;
+    border-radius: 8px;
+    font-size: 0.9em;
+}
+
+.event-type-btn:checked {
+    background-color: @accent_bg_color;
+    color: @accent_fg_color;
+}
+
+/* ===== Holiday Quick Add Buttons ===== */
+
+.holiday-btn {
+    padding: 8px;
+    font-size: 0.85em;
+    border-radius: 8px;
+}
+
+/* ===== Empty State Styling ===== */
+
 .empty-state-icon {
     opacity: 0.5;
 }
@@ -39,30 +176,43 @@
     opacity: 0.6;
 }
 
-/* Birthday list container */
-.birthday-list-container {
-    margin: 12px;
+/* ===== App Icon Styling ===== */
+
+.app-icon {
+    opacity: 0.3;
+    margin-bottom: 24px;
 }
 
-/* Cake icon styling */
 .cake-icon {
     opacity: 0.3;
     margin-bottom: 24px;
 }
 
-/* Card styling for groups */
+/* ===== List Groups ===== */
+
+.upcoming-group {
+    margin: 12px;
+    border-radius: 12px;
+    background-color: alpha(@accent_bg_color, 0.08);
+}
+
+.upcoming-group .boxed-list {
+    background-color: transparent;
+}
+
+.events-group {
+    margin: 12px;
+    border-radius: 12px;
+}
+
 .birthday-group {
     margin: 12px;
     border-radius: 12px;
 }
 
-/* Heart icon styling */
+/* ===== Legacy Icon Support ===== */
+
 .birthday-heart-icon {
     color: @accent_color;
     margin-right: 8px;
-    transition: transform 200ms ease-in-out;
-}
-
-.birthday-heart-icon:hover {
-    transform: scale(1.15);
 }

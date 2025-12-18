@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>org.reend.candela</id>
+  
+  <name>Candela</name>
+  <summary>Never forget your loved ones.</summary>
+  <summary xml:lang="tr">Sevdiklerinizi asla unutmayın.</summary>
+  <summary xml:lang="es">Aplicación de recordatorio de días especiales y eventos</summary>
+  
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  
+  <description>
+    <p>
+      Candela is a beautiful and simple special days reminder application built with GTK4 and Libadwaita.
+      Keep track of birthdays, anniversaries, holidays, and other special events. Never forget important dates!
+    </p>
+    <p xml:lang="tr">
+      Candela, GTK4 ve Libadwaita ile oluşturulmuş güzel ve basit bir özel gün hatırlatıcı uygulamasıdır.
+      Doğum günlerini, yıldönümlerini, bayramları ve diğer özel günleri takip edin. Önemli tarihleri asla unutmayın!
+    </p>
+    <p xml:lang="es">
+      Candela es una aplicación hermosa y simple de recordatorio de días especiales construida con GTK4 y Libadwaita.
+      Lleva un registro de cumpleaños, aniversarios, feriados y otros eventos especiales. ¡Nunca olvides fechas importantes!
+    </p>
+    <p>Features:</p>
+    <ul>
+      <li>Add birthdays, anniversaries, and special events</li>
+      <li>Support for different anniversary types (wedding, relationship, memorial, other)</li>
+      <li>Quick add for popular holidays (New Year, Christmas, Ramadan, etc.)</li>
+      <li>Unique icons and colors for each event type</li>
+      <li>See days remaining until upcoming events</li>
+      <li>Highlight upcoming events with accent color</li>
+      <li>Multi-language support (English, Turkish, Spanish)</li>
+      <li>Light and dark theme support</li>
+      <li>Modern and beautiful interface</li>
+    </ul>
+  </description>
+  
+  <launchable type="desktop-id">org.reend.candela.desktop</launchable>
+  
+  <screenshots>
+    <screenshot type="default">
+      <caption>Main window with events list</caption>
+      <image>https://raw.githubusercontent.com/Reend21/Candela/main/screenshots/main.png</image>
+    </screenshot>
+  </screenshots>
+  
+  <url type="homepage">https://github.com/Reend21/Candela</url>
+  <url type="bugtracker">https://github.com/Reend21/Candela/issues</url>
+  
+  <developer id="org.reend">
+    <name>Reend</name>
+  </developer>
+  
+  <content_rating type="oars-1.1" />
+  
+  <releases>
+    <release version="2.0.0" date="2024-12-18">
+      <description>
+        <p>Major update - Now supports all special days!</p>
+        <ul>
+          <li>Support for birthdays, anniversaries, and special events</li>
+          <li>Anniversary subtypes (wedding, relationship, memorial, other)</li>
+          <li>Quick add for holidays (New Year, Christmas, Ramadan, etc.)</li>
+          <li>Unique icons and colors for each event type</li>
+          <li>Improved user interface</li>
+        </ul>
+      </description>
+    </release>
+    <release version="1.0.0" date="2024-12-07">
+      <description>
+        <p>Initial release of Candela</p>
+        <ul>
+          <li>Add and manage birthdays</li>
+          <li>Multi-language support</li>
+          <li>Theme customization</li>
+        </ul>
+      </description>
+    </release>
+  </releases>
+  
+  <recommends>
+    <control>keyboard</control>
+    <control>pointing</control>
+    <control>touch</control>
+  </recommends>
+  
+  <requires>
+    <display_length compare="ge">360</display_length>
+  </requires>
+  
+  <branding>
+    <color type="primary" scheme_preference="light">#f5c211</color>
+    <color type="primary" scheme_preference="dark">#a68800</color>
+  </branding>
+  
+  <keywords>
+    <keyword>birthday</keyword>
+    <keyword>anniversary</keyword>
+    <keyword>reminder</keyword>
+    <keyword>calendar</keyword>
+    <keyword>special days</keyword>
+    <keyword>events</keyword>
+    <keyword>holidays</keyword>
+    <keyword>GTK</keyword>
+  </keywords>
+</component>

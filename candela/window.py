@@ -2,23 +2,33 @@
 Main Window - The primary application window.
 """
 
+import os
 import gi
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 
-from gi.repository import Gtk, Adw, Gio
+from gi.repository import Gtk, Adw, Gio, GdkPixbuf
 
 from data_manager import DataManager
-from birthday_row import BirthdayRow
-from birthday_dialog import BirthdayDialog
+from birthday_row import EventRow, BirthdayRow
+from birthday_dialog import EventDialog, BirthdayDialog
 from preferences import PreferencesWindow
 from translations import _, set_language
 
 
-class BirthdayWindow(Adw.ApplicationWindow):
+def get_icon_path():
+    """Find the application icon file path."""
+    # Always use candela-symbolic.png for main screen icon
+    icon_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'candela-symbolic.png')
+    if os.path.exists(icon_path):
+        return icon_path
+    return None
+
+
+class CandelaWindow(Adw.ApplicationWindow):
     """Main application window."""
     
-    __gtype_name__ = 'BirthdayWindow'
+    __gtype_name__ = 'CandelaWindow'
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -29,11 +39,11 @@ class BirthdayWindow(Adw.ApplicationWindow):
         self._apply_saved_language()
         
         self.set_title(_('app_title'))
-        self.set_default_size(400, 600)
+        self.set_default_size(420, 650)
         
         self._apply_saved_theme()
         self._setup_ui()
-        self._load_birthdays()
+        self._load_events()
         
     def _apply_saved_language(self):
         """Apply the saved language setting."""
@@ -66,7 +76,7 @@ class BirthdayWindow(Adw.ApplicationWindow):
         # Add button (left)
         add_btn = Gtk.Button()
         add_btn.set_icon_name("list-add-symbolic")
-        add_btn.set_tooltip_text(_('add_birthday'))
+        add_btn.set_tooltip_text(_('add_event'))
         add_btn.add_css_class("flat")
         add_btn.connect('clicked', self._on_add_clicked)
         header.pack_start(add_btn)
@@ -96,11 +106,15 @@ class BirthdayWindow(Adw.ApplicationWindow):
         empty_box.set_valign(Gtk.Align.CENTER)
         empty_box.set_halign(Gtk.Align.CENTER)
         
-        # Cake icon
-        cake_icon = Gtk.Image.new_from_icon_name("emblem-favorite-symbolic")
-        cake_icon.set_pixel_size(128)
-        cake_icon.add_css_class("cake-icon")
-        empty_box.append(cake_icon)
+        # App logo icon
+        icon_path = get_icon_path()
+        if icon_path:
+            logo_icon = Gtk.Image.new_from_file(icon_path)
+        else:
+            logo_icon = Gtk.Image.new_from_icon_name("emblem-favorite-symbolic")
+        logo_icon.set_pixel_size(128)
+        logo_icon.add_css_class("app-icon")
+        empty_box.append(logo_icon)
         
         # Empty state title
         self.empty_title = Gtk.Label(label=_('empty_title'))
@@ -116,7 +130,7 @@ class BirthdayWindow(Adw.ApplicationWindow):
         
         self.content_stack.add_named(empty_box, "empty")
         
-        # Birthday list view
+        # Event list view
         list_container = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         
         # Scrolled window for the list
@@ -131,74 +145,138 @@ class BirthdayWindow(Adw.ApplicationWindow):
         list_content.set_margin_start(12)
         list_content.set_margin_end(12)
         
-        # Top banner with cake icon
+        # Top banner with logo icon
         banner_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=8)
         banner_box.set_halign(Gtk.Align.CENTER)
         banner_box.set_margin_bottom(12)
         
-        banner_icon = Gtk.Image.new_from_icon_name("emblem-favorite-symbolic")
+        icon_path = get_icon_path()
+        if icon_path:
+            banner_icon = Gtk.Image.new_from_file(icon_path)
+        else:
+            banner_icon = Gtk.Image.new_from_icon_name("emblem-favorite-symbolic")
         banner_icon.set_pixel_size(160)
-        banner_icon.add_css_class("cake-icon")
+        banner_icon.add_css_class("app-icon")
         banner_box.append(banner_icon)
         
         list_content.append(banner_box)
         
-        # Birthday list group
-        self.birthday_group = Adw.PreferencesGroup()
-        self.birthday_group.set_title(_('all_birthdays'))
-        self.birthday_group.add_css_class("birthday-group")
+        # Upcoming events list group (within 7 days)
+        self.upcoming_group = Adw.PreferencesGroup()
+        self.upcoming_group.set_title(_('upcoming_events'))
+        self.upcoming_group.add_css_class("upcoming-group")
         
-        self.birthday_listbox = Gtk.ListBox()
-        self.birthday_listbox.set_selection_mode(Gtk.SelectionMode.NONE)
-        self.birthday_listbox.add_css_class("boxed-list")
-        self.birthday_listbox.connect('row-activated', self._on_row_activated)
+        self.upcoming_listbox = Gtk.ListBox()
+        self.upcoming_listbox.set_selection_mode(Gtk.SelectionMode.NONE)
+        self.upcoming_listbox.add_css_class("boxed-list")
+        self.upcoming_listbox.connect('row-activated', self._on_row_activated)
         
-        self.birthday_group.add(self.birthday_listbox)
-        list_content.append(self.birthday_group)
+        self.upcoming_group.add(self.upcoming_listbox)
+        list_content.append(self.upcoming_group)
+        
+        # All events list group
+        self.events_group = Adw.PreferencesGroup()
+        self.events_group.set_title(_('all_events'))
+        self.events_group.add_css_class("events-group")
+        
+        self.events_listbox = Gtk.ListBox()
+        self.events_listbox.set_selection_mode(Gtk.SelectionMode.NONE)
+        self.events_listbox.add_css_class("boxed-list")
+        self.events_listbox.connect('row-activated', self._on_row_activated)
+        
+        self.events_group.add(self.events_listbox)
+        list_content.append(self.events_group)
         
         scrolled.set_child(list_content)
         list_container.append(scrolled)
         
         self.content_stack.add_named(list_container, "list")
         
-    def _load_birthdays(self):
-        """Load and display birthdays."""
-        # Clear existing rows
+    def _load_events(self):
+        """Load and display events."""
+        # Clear existing rows from both listboxes
         while True:
-            row = self.birthday_listbox.get_row_at_index(0)
+            row = self.upcoming_listbox.get_row_at_index(0)
             if row is None:
                 break
-            self.birthday_listbox.remove(row)
+            self.upcoming_listbox.remove(row)
+            
+        while True:
+            row = self.events_listbox.get_row_at_index(0)
+            if row is None:
+                break
+            self.events_listbox.remove(row)
         
-        # Get sorted birthdays
-        birthdays = self.data_manager.get_sorted_birthdays()
+        # Get sorted events
+        events = self.data_manager.get_sorted_events()
         
-        if not birthdays:
+        if not events:
             self.content_stack.set_visible_child_name("empty")
             return
         
         self.content_stack.set_visible_child_name("list")
         
-        # Add birthday rows
-        for birthday in birthdays:
-            row = BirthdayRow(birthday)
-            self.birthday_listbox.append(row)
-            
-        # Update group title with count
-        self.birthday_group.set_title(f"{_('all_birthdays')} ({len(birthdays)})")
+        # Separate upcoming events (within 7 days) from others
+        upcoming_events = []
+        other_events = []
+        
+        for event in events:
+            days_until = event.get('days_until', 999)
+            if days_until <= 7:
+                upcoming_events.append(event)
+            else:
+                other_events.append(event)
+        
+        # Add upcoming event rows
+        for event in upcoming_events:
+            row = EventRow(event)
+            self.upcoming_listbox.append(row)
+        
+        # Add other event rows
+        for event in other_events:
+            row = EventRow(event)
+            self.events_listbox.append(row)
+        
+        # Update group titles with counts
+        if upcoming_events:
+            self.upcoming_group.set_title(f"{_('upcoming_events')} ({len(upcoming_events)})")
+            self.upcoming_group.set_visible(True)
+        else:
+            self.upcoming_group.set_visible(False)
+        
+        if other_events:
+            self.events_group.set_title(f"{_('all_events')} ({len(other_events)})")
+            self.events_group.set_visible(True)
+        else:
+            self.events_group.set_visible(False)
+    
+    # Legacy support
+    def _load_birthdays(self):
+        """Load events (legacy support)."""
+        self._load_events()
         
     def _on_add_clicked(self, button):
         """Handle add button click."""
-        dialog = BirthdayDialog()
-        dialog.connect('birthday-added', self._on_birthday_added)
+        dialog = EventDialog()
+        dialog.connect('event-added', self._on_event_added)
         dialog.present(self)
         
-    def _on_birthday_added(self, dialog, name, day, month, year, notes):
-        """Handle new birthday added."""
-        self.data_manager.add_birthday(name, day, month, year, notes)
-        self._load_birthdays()
+    def _on_event_added(self, dialog, name, day, month, year, notes, event_type, anniversary_type):
+        """Handle new event added."""
+        self.data_manager.add_event(name, day, month, year, notes, event_type, anniversary_type)
+        self._load_events()
         
         # Show toast
+        toast = Adw.Toast.new(_('added_toast').format(name=name))
+        toast.set_timeout(2)
+        self.toast_overlay.add_toast(toast)
+    
+    # Legacy support
+    def _on_birthday_added(self, dialog, name, day, month, year, notes):
+        """Handle new birthday added (legacy support)."""
+        self.data_manager.add_birthday(name, day, month, year, notes)
+        self._load_events()
+        
         toast = Adw.Toast.new(_('added_toast').format(name=name))
         toast.set_timeout(2)
         self.toast_overlay.add_toast(toast)
@@ -221,31 +299,25 @@ class BirthdayWindow(Adw.ApplicationWindow):
         self.empty_title.set_label(_('empty_title'))
         self.empty_subtitle.set_label(_('empty_subtitle'))
         
-        # Update birthday group title
-        birthdays = self.data_manager.get_sorted_birthdays()
-        if birthdays:
-            self.birthday_group.set_title(f"{_('all_birthdays')} ({len(birthdays)})")
-        else:
-            self.birthday_group.set_title(_('all_birthdays'))
-        
-        # Reload birthdays to update row texts
-        self._load_birthdays()
+        # Reload events to update row texts and group titles
+        self._load_events()
         
     def _on_row_activated(self, listbox, row):
-        """Handle row activation (for future edit/delete functionality)."""
-        if isinstance(row, BirthdayRow):
-            birthday_id = row.get_birthday_id()
-            self._show_birthday_details(row, birthday_id)
+        """Handle row activation (for edit/delete functionality)."""
+        if isinstance(row, (EventRow, BirthdayRow)):
+            event_id = row.get_event_id()
+            self._show_event_details(row, event_id)
             
-    def _show_birthday_details(self, row, birthday_id):
-        """Show birthday details with notes and delete option."""
+    def _show_event_details(self, row, event_id):
+        """Show event details with notes and delete option."""
         notes = row.get_notes()
+        event_data = row.get_event_data()
         
         # Create dialog
         dialog = Adw.Dialog()
-        dialog.set_title(_('birthday_details'))
+        dialog.set_title(_('event_details'))
         dialog.set_content_width(350)
-        dialog.set_content_height(250)
+        dialog.set_content_height(280)
         
         # Main box
         main_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
@@ -261,17 +333,30 @@ class BirthdayWindow(Adw.ApplicationWindow):
         delete_btn.set_icon_name("user-trash-symbolic")
         delete_btn.add_css_class("destructive-action")
         delete_btn.set_tooltip_text(_('delete'))
-        delete_btn.connect('clicked', self._on_delete_birthday, dialog, birthday_id, row.get_title())
+        delete_btn.connect('clicked', self._on_delete_event, dialog, event_id, row.get_title())
         header.pack_start(delete_btn)
         
         main_box.append(header)
         
         # Content
-        content_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=16)
+        content_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12)
         content_box.set_margin_top(24)
         content_box.set_margin_bottom(24)
         content_box.set_margin_start(24)
         content_box.set_margin_end(24)
+        
+        # Event type indicator
+        event_type = event_data.get('event_type', 'birthday')
+        anniversary_type = event_data.get('anniversary_type')
+        
+        from birthday_row import get_event_style
+        event_name = event_data.get('name', '')
+        style = get_event_style(event_type, anniversary_type, event_name)
+        
+        type_label = Gtk.Label(label=f"{style['emoji']} {_(event_type)}")
+        type_label.add_css_class("caption")
+        type_label.add_css_class("dim-label")
+        content_box.append(type_label)
         
         # Name label
         name_label = Gtk.Label(label=row.get_title())
@@ -314,13 +399,29 @@ class BirthdayWindow(Adw.ApplicationWindow):
         main_box.append(content_box)
         
         dialog.present(self)
+    
+    # Legacy support  
+    def _show_birthday_details(self, row, birthday_id):
+        """Show event details (legacy support)."""
+        self._show_event_details(row, birthday_id)
         
-    def _on_delete_birthday(self, button, dialog, birthday_id, name):
+    def _on_delete_event(self, button, dialog, event_id, name):
         """Handle delete button click."""
         dialog.close()
-        self.data_manager.delete_birthday(birthday_id)
-        self._load_birthdays()
+        self.data_manager.delete_event(event_id)
+        self._load_events()
         
         toast = Adw.Toast.new(_('deleted_toast').format(name=name))
         toast.set_timeout(2)
         self.toast_overlay.add_toast(toast)
+    
+    # Legacy support
+    def _on_delete_birthday(self, button, dialog, birthday_id, name):
+        """Handle delete (legacy support)."""
+        self._on_delete_event(button, dialog, birthday_id, name)
+
+
+# Legacy support - keep BirthdayWindow as alias
+class BirthdayWindow(CandelaWindow):
+    """Legacy alias for CandelaWindow."""
+    __gtype_name__ = 'BirthdayWindow'

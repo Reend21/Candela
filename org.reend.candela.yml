@@ -1,0 +1,23 @@
+id: org.reend.candela
+runtime: org.gnome.Platform
+runtime-version: '46'
+sdk: org.gnome.Sdk
+command: candela
+
+finish-args:
+  # X11 + Wayland access
+  - --share=ipc
+  - --socket=fallback-x11
+  - --socket=wayland
+  # Desktop integration
+  - --device=dri
+  # User data access for storing birthdays
+  - --filesystem=xdg-data/candela:create
+
+modules:
+  - name: candela
+    buildsystem: meson
+    sources:
+      - type: dir
+        path: .
+
