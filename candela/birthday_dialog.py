@@ -139,9 +139,10 @@ class EventDialog(Adw.Dialog):
         self.anniversary_group.add(anniversary_box)
         content.append(self.anniversary_group)
         
-        # Quick Add Holidays Group
-        holidays_group = Adw.PreferencesGroup()
-        holidays_group.set_title(_('quick_add'))
+        # Quick Add Holidays Group (hidden by default, shown only for Special Event)
+        self.holidays_group = Adw.PreferencesGroup()
+        self.holidays_group.set_title(_('quick_add'))
+        self.holidays_group.set_visible(False)
         
         # First row of holidays
         holidays_box1 = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
@@ -155,7 +156,7 @@ class EventDialog(Adw.Dialog):
             btn.connect('clicked', self._on_holiday_clicked, holiday_key)
             holidays_box1.append(btn)
         
-        holidays_group.add(holidays_box1)
+        self.holidays_group.add(holidays_box1)
         
         # Second row of holidays
         holidays_box2 = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
@@ -170,8 +171,8 @@ class EventDialog(Adw.Dialog):
             btn.connect('clicked', self._on_holiday_clicked, holiday_key)
             holidays_box2.append(btn)
         
-        holidays_group.add(holidays_box2)
-        content.append(holidays_group)
+        self.holidays_group.add(holidays_box2)
+        content.append(self.holidays_group)
         
         # Name entry group
         name_group = Adw.PreferencesGroup()
@@ -244,6 +245,9 @@ class EventDialog(Adw.Dialog):
             
             # Show/hide anniversary subtype
             self.anniversary_group.set_visible(event_type == EVENT_TYPE_ANNIVERSARY)
+            
+            # Show/hide holidays quick add (only for Special Event)
+            self.holidays_group.set_visible(event_type == EVENT_TYPE_SPECIAL)
             
             if event_type != EVENT_TYPE_ANNIVERSARY:
                 self.selected_anniversary_type = None

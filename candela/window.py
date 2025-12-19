@@ -333,7 +333,7 @@ class CandelaWindow(Adw.ApplicationWindow):
         delete_btn.set_icon_name("user-trash-symbolic")
         delete_btn.add_css_class("destructive-action")
         delete_btn.set_tooltip_text(_('delete'))
-        delete_btn.connect('clicked', self._on_delete_event, dialog, event_id, row.get_title())
+        delete_btn.connect('clicked', self._on_delete_event, dialog, event_id, row.get_title(), event_data)
         header.pack_start(delete_btn)
         
         main_box.append(header)
@@ -405,13 +405,30 @@ class CandelaWindow(Adw.ApplicationWindow):
         """Show event details (legacy support)."""
         self._show_event_details(row, birthday_id)
         
-    def _on_delete_event(self, button, dialog, event_id, name):
+    def _on_delete_event(self, button, dialog, event_id, name, event_data=None):
         """Handle delete button click."""
         dialog.close()
         self.data_manager.delete_event(event_id)
         self._load_events()
         
-        toast = Adw.Toast.new(_('deleted_toast').format(name=name))
+        # Easter egg: special toast messages based on event type
+        toast_message = _('deleted_toast').format(name=name)
+        
+        if event_data:
+            from data_manager import (EVENT_TYPE_ANNIVERSARY, ANNIVERSARY_MEMORIAL, 
+                                       ANNIVERSARY_WEDDING, ANNIVERSARY_RELATIONSHIP)
+            event_type = event_data.get('event_type')
+            anniversary_type = event_data.get('anniversary_type')
+            
+            if event_type == EVENT_TYPE_ANNIVERSARY:
+                if anniversary_type == ANNIVERSARY_MEMORIAL:
+                    # Easter egg: memorial deletion shows just "..."
+                    toast_message = _('deleted_memorial_toast')
+                elif anniversary_type in [ANNIVERSARY_WEDDING, ANNIVERSARY_RELATIONSHIP]:
+                    # Easter egg: love anniversary deletion shows special message
+                    toast_message = _('deleted_love_toast')
+        
+        toast = Adw.Toast.new(toast_message)
         toast.set_timeout(2)
         self.toast_overlay.add_toast(toast)
     

@@ -89,6 +89,8 @@ TRANSLATIONS = {
         # Toasts
         'added_toast': "'{name}' eklendi",
         'deleted_toast': "'{name}' silindi",
+        'deleted_memorial_toast': '...',
+        'deleted_love_toast': 'Her şey gönlünce olsun.',
         
         # Preferences
         'preferences_title': 'Ayarlar',
@@ -219,6 +221,8 @@ TRANSLATIONS = {
         # Toasts
         'added_toast': "'{name}' added",
         'deleted_toast': "'{name}' deleted",
+        'deleted_memorial_toast': '...',
+        'deleted_love_toast': 'May everything go as you wish.',
         
         # Preferences
         'preferences_title': 'Settings',
@@ -349,6 +353,8 @@ TRANSLATIONS = {
         # Toasts
         'added_toast': "'{name}' agregado",
         'deleted_toast': "'{name}' eliminado",
+        'deleted_memorial_toast': '...',
+        'deleted_love_toast': 'Que todo salga como deseas.',
         
         # Preferences
         'preferences_title': 'Configuración',

@@ -2,16 +2,17 @@
 
 # Candela
 <<<<<<< Updated upstream
-An Adwaita app to take notes for your relatives birthday.
+<<<<<<< Updated upstream
+Never forget your loved ones.
 =======
+=======
+>>>>>>> Stashed changes
 
 <p align="center">
   <img src="data/icons/hicolor/128x128/apps/org.reend.candela.png" alt="Candela Logo" width="128">
 </p>
 
-**Candela** is a beautiful and simple birthday reminder application built with GTK4 and Libadwaita.
-Keep track of your loved ones' birthdays and never forget to wish them a happy birthday.
-
+**Candela** is a beautiful and simple Adwaita app to take notes for special events such as your loved ones birthday.
 ## Features
 
 - 📅 Add birthdays with optional year and notes
@@ -84,4 +85,7 @@ This project is licensed under the GPL-3.0-or-later License - see the [LICENSE](
 ## Author
 
 **Reend** - [GitHub](https://github.com/Reend21)
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes

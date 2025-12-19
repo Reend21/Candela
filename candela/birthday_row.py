@@ -292,6 +292,15 @@ class EventRow(Adw.ActionRow):
             special_label.set_valign(Gtk.Align.CENTER)
             self.add_suffix(special_label)
         
+        # Easter egg: "11/B" in name + Valentine's related event = 🔥
+        name_lower = name.lower()
+        is_valentines = ('sevgililer' in name_lower or 'valentine' in name_lower or 
+                         'san valent' in name_lower)
+        if '11/b' in name_lower and is_valentines:
+            fire_label = Gtk.Label(label="🔥")
+            fire_label.set_valign(Gtk.Align.CENTER)
+            self.add_suffix(fire_label)
+        
         # Add event type icon prefix
         icon_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         icon_box.set_valign(Gtk.Align.CENTER)
