@@ -1,12 +1,7 @@
 <img width="256" height="256" alt="candela" src="https://github.com/user-attachments/assets/f5782853-b476-45ef-9a09-259c8d8aafcd" />
 
 # Candela
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 Never forget your loved ones.
-=======
-=======
->>>>>>> Stashed changes
 
 <p align="center">
   <img src="data/icons/hicolor/128x128/apps/org.reend.candela.png" alt="Candela Logo" width="128">
@@ -85,7 +80,3 @@ This project is licensed under the GPL-3.0-or-later License - see the [LICENSE](
 ## Author
 
 **Reend** - [GitHub](https://github.com/Reend21)
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
