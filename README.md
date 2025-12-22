@@ -1,26 +1,15 @@
 <img width="256" height="256" alt="candela" src="https://github.com/user-attachments/assets/f5782853-b476-45ef-9a09-259c8d8aafcd" />
 
 # Candela
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 Never forget your loved ones.
-=======
-=======
->>>>>>> Stashed changes
 
-<p align="center">
-  <img src="data/icons/hicolor/128x128/apps/org.reend.candela.png" alt="Candela Logo" width="128">
-</p>
-
-**Candela** is a beautiful and simple Adwaita app to take notes for special events such as your loved ones birthday.
+**Candela** is a simple adwaita app for not let you forget special days.
 ## Features
 
-- 📅 Add birthdays with optional year and notes
-- ⏰ See days remaining until upcoming birthdays
-- 🎨 Highlight upcoming birthdays with accent color
-- 🌍 Multi-language support (English, Turkish, Spanish)
-- 🌙 Light and dark theme support
-- 💫 Modern and beautiful interface
+- 📅 Add birthdays, special days and events with optional year and notes
+- ⏰ See days remaining until upcoming events
+- 🌍 Multi-language support
+- 💫 Simple interface with Adwaita
 
 ## Screenshots
 
@@ -81,11 +70,3 @@ flatpak-builder --force-clean flatpak-build org.reend.candela.yml
 ## License
 
 This project is licensed under the GPL-3.0-or-later License - see the [LICENSE](LICENSE) file for details.
-
-## Author
-
-**Reend** - [GitHub](https://github.com/Reend21)
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
