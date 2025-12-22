@@ -3,15 +3,13 @@
 # Candela
 Never forget your loved ones.
 
-**Candela** is a simple adwaita app for not let your
+**Candela** is a simple adwaita app for not let you forget special days.
 ## Features
 
-- 📅 Add birthdays with optional year and notes
-- ⏰ See days remaining until upcoming birthdays
-- 🎨 Highlight upcoming birthdays with accent color
-- 🌍 Multi-language support (English, Turkish, Spanish)
-- 🌙 Light and dark theme support
-- 💫 Modern and beautiful interface
+- 📅 Add birthdays, special days and events with optional year and notes
+- ⏰ See days remaining until upcoming events
+- 🌍 Multi-language support
+- 💫 Simple interface with Adwaita
 
 ## Screenshots
 
