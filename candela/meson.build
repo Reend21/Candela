@@ -26,6 +26,12 @@ install_data('../data/icons/hicolor/128x128/apps/org.reend.candela.png',
   rename: 'org.reend.candela.png'
 )
 
+# Install symbolic icon for main screen
+install_data('../candela-symbolic.png',
+  install_dir: get_option('prefix') / get_option('datadir') / 'candela',
+  rename: 'candela-symbolic.png'
+)
+
 # Create launcher script
 launcher_conf = configuration_data()
 launcher_conf.set('PYTHON', python.find_installation('python3').full_path())

@@ -18,10 +18,20 @@ from translations import _, set_language
 
 def get_icon_path():
     """Find the application icon file path."""
-    # Always use candela-symbolic.png for main screen icon
-    icon_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'candela-symbolic.png')
-    if os.path.exists(icon_path):
-        return icon_path
+    # Try multiple paths for the icon
+    icon_paths = [
+        # Development path (running from source)
+        os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'candela-symbolic.png'),
+        # Flatpak installed path
+        '/app/share/candela/candela-symbolic.png',
+        # System installed paths
+        '/usr/share/candela/candela-symbolic.png',
+        '/usr/local/share/candela/candela-symbolic.png',
+    ]
+    
+    for icon_path in icon_paths:
+        if os.path.exists(icon_path):
+            return icon_path
     return None
 
 

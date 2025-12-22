@@ -21,8 +21,19 @@ install_data(metainfo_file,
   install_dir: get_option('datadir') / 'metainfo'
 )
 
-# Icons - Install the main icon in various sizes
-# Using 128x128 as the primary icon
+# Icons - Install icons in various sizes
+install_data('icons/hicolor/48x48/apps/org.reend.candela.png',
+  install_dir: get_option('datadir') / 'icons/hicolor/48x48/apps'
+)
+
+install_data('icons/hicolor/64x64/apps/org.reend.candela.png',
+  install_dir: get_option('datadir') / 'icons/hicolor/64x64/apps'
+)
+
 install_data('icons/hicolor/128x128/apps/org.reend.candela.png',
   install_dir: get_option('datadir') / 'icons/hicolor/128x128/apps'
+)
+
+install_data('icons/hicolor/scalable/apps/org.reend.candela.svg',
+  install_dir: get_option('datadir') / 'icons/hicolor/scalable/apps'
 )
