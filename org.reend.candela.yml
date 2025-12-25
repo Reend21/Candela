@@ -15,7 +15,6 @@ finish-args:
   - --filesystem=xdg-data/candela:create
   # Access to user icon themes
   - --filesystem=~/.local/share/icons:ro
-  - --filesystem=/usr/share/icons:ro
   # DConf access for GTK settings (themes, icons, accent colors, etc.)
   - --talk-name=ca.desrt.dconf
   - --filesystem=xdg-run/dconf
@@ -25,10 +24,10 @@ finish-args:
   - --talk-name=org.freedesktop.portal.Desktop
   - --talk-name=org.freedesktop.portal.Settings
   # GSettings schemas access
-  - --filesystem=/usr/share/glib-2.0/schemas:ro
   - --filesystem=~/.local/share/glib-2.0/schemas:ro
   # Access to GTK config
   - --filesystem=xdg-config/gtk-4.0:ro
+  - --filesystem=xdg-config/gtk-3.0:ro
 
 modules:
   - name: candela

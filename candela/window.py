@@ -52,8 +52,183 @@ class CandelaWindow(Adw.ApplicationWindow):
         self.set_default_size(420, 650)
         
         self._apply_saved_theme()
+        self._setup_accent_color()
         self._setup_ui()
         self._load_events()
+        
+    def _setup_accent_color(self):
+        """Setup and apply system accent color dynamically."""
+        try:
+            from gi.repository import Gio, Gdk, GLib
+            
+            accent_rgba = None
+            
+            # Method 1: Try to get accent color from portal settings (works in Flatpak)
+            try:
+                portal = Gio.DBusProxy.new_for_bus_sync(
+                    Gio.BusType.SESSION,
+                    Gio.DBusProxyFlags.NONE,
+                    None,
+                    'org.freedesktop.portal.Desktop',
+                    '/org/freedesktop/portal/desktop',
+                    'org.freedesktop.portal.Settings',
+                    None
+                )
+                
+                # Read all settings from org.gnome.desktop.interface namespace
+                result = portal.call_sync(
+                    'ReadAll',
+                    GLib.Variant('(as)', (['org.gnome.desktop.interface'],)),
+                    Gio.DBusCallFlags.NONE,
+                    -1,
+                    None
+                )
+                
+                if result:
+                    # Parse the result to find accent-color
+                    settings_dict = result.unpack()[0]
+                    accent_color_name = None
+                    
+                    for namespace, values in settings_dict.items():
+                        if namespace == 'org.gnome.desktop.interface':
+                            if 'accent-color' in values:
+                                # The value is already a variant containing the string
+                                accent_variant = values['accent-color']
+                                # Check if it's a variant or already unpacked
+                                if hasattr(accent_variant, 'unpack'):
+                                    accent_color_name = accent_variant.unpack()
+                                else:
+                                    accent_color_name = accent_variant
+                                print(f"→ Found accent-color setting: '{accent_color_name}' (type: {type(accent_color_name).__name__})")
+                                break
+                    
+                    if accent_color_name:
+                        # GNOME accent colors mapping
+                        accent_colors = {
+                            'blue': (0.22, 0.55, 0.92),
+                            'teal': (0.13, 0.74, 0.61),
+                            'green': (0.30, 0.69, 0.29),
+                            'yellow': (0.96, 0.75, 0.14),
+                            'orange': (0.90, 0.49, 0.13),
+                            'red': (0.88, 0.26, 0.21),
+                            'pink': (0.91, 0.33, 0.64),
+                            'purple': (0.61, 0.35, 0.71),
+                            'slate': (0.45, 0.52, 0.59),
+                        }
+                        
+                        if accent_color_name in accent_colors:
+                            rgb = accent_colors[accent_color_name]
+                            accent_rgba = Gdk.RGBA()
+                            accent_rgba.red = rgb[0]
+                            accent_rgba.green = rgb[1]
+                            accent_rgba.blue = rgb[2]
+                            accent_rgba.alpha = 1.0
+                            print(f"✓ Portal accent color: {accent_color_name} -> RGB({int(rgb[0]*255)}, {int(rgb[1]*255)}, {int(rgb[2]*255)})")
+            except Exception as e:
+                print(f"✗ Portal accent color read failed: {e}")
+            
+            # Method 2: Fallback to StyleContext lookup
+            if accent_rgba is None:
+                print("→ Trying fallback StyleContext method...")
+                display = self.get_display()
+                if display:
+                    temp_widget = Gtk.Label()
+                    temp_context = temp_widget.get_style_context()
+                    accent_color = temp_context.lookup_color('accent_bg_color')
+                    
+                    if accent_color[0]:
+                        accent_rgba = accent_color[1]
+                        print(f"✓ Using fallback accent color from StyleContext: RGB({int(accent_rgba.red*255)}, {int(accent_rgba.green*255)}, {int(accent_rgba.blue*255)})")
+            
+            # Apply the color if we got it
+            if accent_rgba:
+                display = self.get_display()
+                if display:
+                    # Calculate a slightly darker version for text/borders
+                    darker_r = max(0, accent_rgba.red - 0.1)
+                    darker_g = max(0, accent_rgba.green - 0.1)
+                    darker_b = max(0, accent_rgba.blue - 0.1)
+                    
+                    css_data = f"""
+                    /* Upcoming events background */
+                    .upcoming-list-bg {{
+                        background-color: rgba({int(accent_rgba.red * 255)}, {int(accent_rgba.green * 255)}, {int(accent_rgba.blue * 255)}, 0.12);
+                    }}
+                    
+                    /* Suggested action buttons (Add, Save, etc.) */
+                    .suggested-action {{
+                        background-color: rgb({int(accent_rgba.red * 255)}, {int(accent_rgba.green * 255)}, {int(accent_rgba.blue * 255)});
+                        color: white;
+                    }}
+                    
+                    .suggested-action:hover {{
+                        background-color: rgb({int(darker_r * 255)}, {int(darker_g * 255)}, {int(darker_b * 255)});
+                    }}
+                    
+                    /* Event type buttons when checked */
+                    .event-type-btn:checked {{
+                        background-color: rgb({int(accent_rgba.red * 255)}, {int(accent_rgba.green * 255)}, {int(accent_rgba.blue * 255)});
+                        color: white;
+                    }}
+                    
+                    .event-type-btn:checked:hover {{
+                        background-color: rgb({int(darker_r * 255)}, {int(darker_g * 255)}, {int(darker_b * 255)});
+                    }}
+                    
+                    /* Switch (Enable Notifications toggle) */
+                    switch:checked {{
+                        background-color: rgb({int(accent_rgba.red * 255)}, {int(accent_rgba.green * 255)}, {int(accent_rgba.blue * 255)});
+                    }}
+                    
+                    switch:checked:hover {{
+                        background-color: rgb({int(darker_r * 255)}, {int(darker_g * 255)}, {int(darker_b * 255)});
+                    }}
+                    
+                    /* Calendar selected date */
+                    calendar:selected {{
+                        background-color: rgb({int(accent_rgba.red * 255)}, {int(accent_rgba.green * 255)}, {int(accent_rgba.blue * 255)});
+                        color: white;
+                    }}
+                    
+                    calendar:selected:hover {{
+                        background-color: rgb({int(darker_r * 255)}, {int(darker_g * 255)}, {int(darker_b * 255)});
+                    }}
+                    
+                    /* Alternative calendar selectors for GTK4 */
+                    .calendar .day:selected {{
+                        background-color: rgb({int(accent_rgba.red * 255)}, {int(accent_rgba.green * 255)}, {int(accent_rgba.blue * 255)});
+                        color: white;
+                    }}
+                    
+                    .calendar .day.today {{
+                        color: rgb({int(accent_rgba.red * 255)}, {int(accent_rgba.green * 255)}, {int(accent_rgba.blue * 255)});
+                        font-weight: bold;
+                    }}
+                    
+                    /* Calendar header and navigation */
+                    .calendar button.day:checked {{
+                        background-color: rgb({int(accent_rgba.red * 255)}, {int(accent_rgba.green * 255)}, {int(accent_rgba.blue * 255)});
+                        color: white;
+                    }}
+                    """
+                    
+                    css_provider = Gtk.CssProvider()
+                    css_provider.load_from_data(css_data.encode())
+                    Gtk.StyleContext.add_provider_for_display(
+                        display,
+                        css_provider,
+                        Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION + 1
+                    )
+                    print(f"✓ Applied accent color to upcoming events: RGB({int(accent_rgba.red * 255)}, {int(accent_rgba.green * 255)}, {int(accent_rgba.blue * 255)})")
+
+            else:
+                print("✗ No accent color could be determined")
+        except Exception as e:
+            print(f"✗ Could not apply accent color: {e}")
+
+
+
+
         
     def _apply_saved_language(self):
         """Apply the saved language setting."""
@@ -179,6 +354,7 @@ class CandelaWindow(Adw.ApplicationWindow):
         self.upcoming_listbox = Gtk.ListBox()
         self.upcoming_listbox.set_selection_mode(Gtk.SelectionMode.NONE)
         self.upcoming_listbox.add_css_class("boxed-list")
+        self.upcoming_listbox.add_css_class("upcoming-list-bg")
         self.upcoming_listbox.connect('row-activated', self._on_row_activated)
         
         self.upcoming_group.add(self.upcoming_listbox)

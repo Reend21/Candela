@@ -193,11 +193,10 @@
 .upcoming-group {
     margin: 12px;
     border-radius: 12px;
-    background-color: alpha(@accent_bg_color, 0.08);
 }
 
-.upcoming-group .boxed-list {
-    background-color: transparent;
+.upcoming-list-bg {
+    background-color: alpha(@accent_bg_color, 0.12);
 }
 
 .events-group {
