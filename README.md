@@ -1,4 +1,4 @@
-<img width="512" height="512" alt="candela" src="https://github.com/user-attachments/assets/af552f39-d442-48a2-87ff-323cac62c914" />
+<img width="256" height="256" alt="candela" src="https://github.com/user-attachments/assets/af552f39-d442-48a2-87ff-323cac62c914" />
 
 # Candela
 Never forget your loved ones.
